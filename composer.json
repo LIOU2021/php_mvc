@@ -1,0 +1,18 @@
+{
+    "name": "jing/php_mvc",
+    "autoload": {
+        "files": [
+            "app/helpers.php"
+        ],
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "LIOU",
+            "email": "liou95145hf@gmail.com"
+        }
+    ],
+    "require": {}
+}
