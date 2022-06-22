@@ -24,5 +24,18 @@ $this->limitAPI('GET', true, function () {
         });        
 ```
 
+# Model
+> db table 名稱 對應model名稱
+> 比如User.php，對應的就是user這張表
+> sql的create database與table需要自行透過sql新增
+
+# database 資料夾
+> 單純放sql紀錄。本專案不打算開發類似migration的功能
+
 # 待開發
 > 撰寫model的ORM
+> all(V)
+> show(V)
+> update
+> create
+> delete

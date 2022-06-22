@@ -69,4 +69,11 @@ class Controller
             return $res;
         }
     }
+
+    /**
+     * 獲得url路徑最後一個值
+     */
+    public function getUrlParam(){
+        return $this->http->getUrlParam();
+    }
 }

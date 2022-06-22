@@ -6,6 +6,7 @@ define('debug', env('debug',false));
 define('SITENAME', env('SITENAME',"自製 php mvc"));
 
 // Database 的參數，以下為範例
+define('DATABASE', env('DATABASE',null));
 define('DB_HOST', env('DB_HOST',null));
 define('DB_PORT', env('DB_PORT',null));
 define('DB_NAME', env('DB_NAME',null));

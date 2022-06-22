@@ -13,4 +13,7 @@ return [
     404 => "router not find !",
     405 => "only allow one method reponse, but find two or more!",
     406 => "doesn't any route match !",
+
+    // sql error
+    500=>"find model by id, but not find !",
 ];

@@ -9,18 +9,15 @@ class Http
     private $methods;
     private $uri;
     private $uriLn;
+    private $urlParam;
 
     public function __construct()
     {
         $this->methods = $_SERVER['REQUEST_METHOD'];
         $this->uri = explode('/', parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
         $this->uriLn = count($this->uri);
+        $this->urlParam = $this->uri[$this->uriLn - 1];
     }
-
-    // public function getMethods()
-    // {
-    //     return $this->methods;
-    // }
 
     /**
      * 可接受的API格式
@@ -36,12 +33,12 @@ class Http
             return null;
         }
 
-        if ($urlParam && !is_numeric($this->uri[$this->uriLn - 1])) {
+        if ($urlParam && !is_numeric($this->urlParam)) {
             // echo 'urlParam error !';
             return null;
         }
 
-        if (is_numeric($this->uri[$this->uriLn - 1])&&!$urlParam) {
+        if (is_numeric($this->urlParam)&&!$urlParam) {
             // echo 'urlParam error !';
             return null;
         }
@@ -53,5 +50,12 @@ class Http
             echo "It is not function";
             exit;
         }
+    }
+
+    /**
+     * 獲得url路徑最後一個值
+     */
+    public function getUrlParam(){
+        return $this->urlParam;
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Http\Http;
 use App\Models\User;
 
 class UserController extends Controller
@@ -18,20 +17,22 @@ class UserController extends Controller
     public function index()
     {
         $all = $this->limitAPI('GET', false, function () {
-            return User::all();
+            $user = new User();
+            return $user->all();
         });
 
         $show = $this->limitAPI('GET', true, function () {
-            return User::find(54);
+            $user = new User();
+            return $user->find($this->getUrlParam());
         });
 
  
         return $this->allowAPI([$all,$show]);
     }
 
-    public function edit()
+    public function update()
     {
-        // echo 'user controller edit';
-        return 'user controller edit';
+        // echo 'user controller update';
+        return 'user controller update';
     }
 }
