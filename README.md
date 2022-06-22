@@ -3,3 +3,6 @@
 
 # 路由命名規則
 > /controller/method/{id?}
+
+# 待開發
+> config採用.env架構

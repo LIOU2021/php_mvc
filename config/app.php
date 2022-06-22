@@ -1,4 +1,6 @@
 <?php
+//debug
+define('debug', true);
 
 // Database 的參數，以下為範例
 define('DB_HOST', '127.0.0.1');

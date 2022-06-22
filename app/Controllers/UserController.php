@@ -2,20 +2,23 @@
 
 namespace App\Controllers;
 
+use App\Http\Http;
 use App\Models\User;
 
-class UserController extends Controller{
-    
-    protected $action=["POST","GET","PUT","DELETE"];
+class UserController extends Controller
+{
 
-    public function index(){
-        // echo 'user controller index';
-        // echo $this->action;
-        return User::all();
-        return "user controller index";
+    protected $action = ["POST", "GET", "PUT", "DELETE"];
+
+    public function index()
+    {
+        $this->limitAPI('GET', false, function () {
+            return User::all();
+        });
     }
 
-    public function edit(){
+    public function edit()
+    {
         // echo 'user controller edit';
         return 'user controller edit';
     }
