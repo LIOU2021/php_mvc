@@ -26,3 +26,21 @@ if (!function_exists('helpReturn')) {
         return json_encode($res);
     }
 }
+
+if (!function_exists('env')) {
+
+    /**
+     * get env data
+     * 
+     * @param string $key env的key
+     * @param mix $default 如果找不到該key，欲返回的值
+     */
+    function env($key, $default = null)
+    {
+        if (isset($GLOBALS['envArr'][$key])) {
+            return $GLOBALS['envArr'][$key];
+        } else {
+            return $default;
+        }
+    }
+}

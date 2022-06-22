@@ -8,6 +8,11 @@ use App\Models\User;
 class UserController extends Controller
 {
 
+    /**
+     * 宣告該Controller可支援的請求方法
+     * 
+     * 如果無特別覆寫，那麼將會支持全部的request methods
+     */
     protected $action = ["POST", "GET", "PUT", "DELETE"];
 
     public function index()

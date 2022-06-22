@@ -7,10 +7,19 @@ use App\Http\Http;
 class Controller
 {
 
+    private $http;
+
     /**
-     * API所能接受的方法。預設是全部。
+     * 該Controller所支持的request methods
+     * 
+     * 如果無特別覆寫，那麼將會支持全部的request methods
      */
     protected $action = ["*"];
+
+    public function __construct()
+    {
+        $this->http = new Http();
+    }
 
     /**
      * Get request accept method
@@ -31,7 +40,7 @@ class Controller
      */
     public function limitAPI(string $method, bool $urlParam = false, callable $callback)
     {
-        $http = new Http();
+        $http = $this->http;
         return $http->accept($method, $urlParam, $callback);
     }
 }
