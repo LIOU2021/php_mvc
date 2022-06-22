@@ -17,9 +17,16 @@ class UserController extends Controller
 
     public function index()
     {
-        $this->limitAPI('GET', false, function () {
+        $all = $this->limitAPI('GET', false, function () {
             return User::all();
         });
+
+        $show = $this->limitAPI('GET', true, function () {
+            return User::find(54);
+        });
+
+ 
+        return $this->allowAPI([$all,$show]);
     }
 
     public function edit()

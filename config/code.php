@@ -8,7 +8,9 @@ return [
 
     // Router
     401 => "controller not find !",
-    402 => "mothod not find !",
-    403=>"this router not support this request method !",
+    402 => "method not find !",
+    403 => "this router not support this request method !",
     404 => "router not find !",
+    405 => "only allow one method reponse, but find two or more!",
+    406 => "doesn't any route match !",
 ];

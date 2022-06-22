@@ -18,6 +18,9 @@ if (!function_exists('helpReturn')) {
      */
     function helpReturn($status, $data = null)
     {
+        if($status != 200){
+            header("HTTP/1.1 404 Not Found");
+        }
         header('Content-Type: application/json; charset=utf-8');
         $code = require_once('../config/code.php');
         $res['status'] = $status;

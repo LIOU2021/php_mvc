@@ -43,4 +43,30 @@ class Controller
         $http = $this->http;
         return $http->accept($method, $urlParam, $callback);
     }
+
+    /**
+     * 檢測limitAPI回傳非null時就要回傳
+     */
+    public function allowAPI(array $arr)
+    {
+        $trueCount = 0;
+        $res = null;
+
+        foreach ($arr as $item) {
+            if ($item) {
+                $trueCount++;
+                $res = $item;
+            }
+        }
+
+        if ($trueCount >= 2) {
+            echo helpReturn(405);
+            exit;
+        }else if($trueCount == 0){
+            echo helpReturn(406);
+            exit;
+        } else {
+            return $res;
+        }
+    }
 }

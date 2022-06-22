@@ -36,7 +36,6 @@ function callClass($uri, $method = null)
     $filePath = "../app/Controllers/$uri[1]Controller.php";
 
     if (!file_exists($filePath)) {
-        header("HTTP/1.1 404 Not Found");
         echo helpReturn(401, "file app/Controllers/$uri[1]Controller.php not find !");
         exit();
     } else {
@@ -52,7 +51,6 @@ function callClass($uri, $method = null)
         if(!in_array("*",$actionArray)){
             $requestMethod = $_SERVER['REQUEST_METHOD'];
             if(!in_array($requestMethod,$actionArray)){
-                header("HTTP/1.1 404 Not Found");
                 echo helpReturn(403, "request method now : $requestMethod");
                 exit;
             }
@@ -64,7 +62,6 @@ function callClass($uri, $method = null)
         }
 
         if (!method_exists($controller, $method)) {
-            header("HTTP/1.1 404 Not Found");
             echo helpReturn(402, "$method of method not find in $controllerName");
             exit();
         } else {
