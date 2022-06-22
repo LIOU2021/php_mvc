@@ -39,9 +39,11 @@ return $this->allowAPI([$all,$show]);
 
 # 待開發
 > 撰寫model的ORM
->> all(V)
-> show(V)
-> update
-> create
-> delete
+
+* all(V)
+* find(V)
+* update
+* create
+* delete
+
 > 撰寫middleware
