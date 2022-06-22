@@ -6,6 +6,10 @@ $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = explode('/', $uri);
 $ln = count($uri);
 
+if (is_numeric($uri[$ln - 1])) {
+    $ln -= 1;
+};
+
 switch (true) {
     case ($ln <= 2):
         if (!$uri[1]) {
@@ -20,9 +24,15 @@ switch (true) {
         break;
 }
 
+/**
+ * Router處理
+ * 
+ * @param array $uri route path
+ * @param string $method
+ */
 function callClass($uri, $method = null)
 {
-    
+
     $filePath = "../app/Controllers/$uri[1]Controller.php";
 
     if (!file_exists($filePath)) {
@@ -37,10 +47,22 @@ function callClass($uri, $method = null)
         $controllerPath = sprintf('App\Controllers\%s', $controllerName);
         $controller = new $controllerPath();
 
+        $actionArray = $controller->getAction();
+        
+        if(!in_array("*",$actionArray)){
+            $requestMethod = $_SERVER['REQUEST_METHOD'];
+            if(!in_array($requestMethod,$actionArray)){
+                header("HTTP/1.1 404 Not Found");
+                echo helpReturn(403, "request method now : $requestMethod");
+                exit;
+            }
+            
+        }
+
         if ($method == null) {
             $method = $uri[2];
         }
-        
+
         if (!method_exists($controller, $method)) {
             header("HTTP/1.1 404 Not Found");
             echo helpReturn(402, "$method of method not find in $controllerName");
