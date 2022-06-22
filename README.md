@@ -29,7 +29,9 @@ return $this->allowAPI([$all,$show]);
 
 # Model
 > db table 名稱 對應model名稱
+
 > 比如User.php，對應的就是user這張表
+
 > sql的create database與table需要自行透過sql新增
 
 # database 資料夾
@@ -37,8 +39,9 @@ return $this->allowAPI([$all,$show]);
 
 # 待開發
 > 撰寫model的ORM
-> all(V)
+>> all(V)
 > show(V)
 > update
 > create
 > delete
+> 撰寫middleware
