@@ -14,14 +14,17 @@
 ```
 可透過下列方法來控制Controller中的方法只在特定API格式中執行。
 比如下列是指接受/user這種讀取全部的格式
-$this->limitAPI('GET', false, function () {
+$all = $this->limitAPI('GET', false, function () {
             return User::all();
         });
 
 下列是指接受/user/{id}這種讀取特定ID的格式。此範例為讀取id為30的user資料。
-$this->limitAPI('GET', true, function () {
+$show = $this->limitAPI('GET', true, function () {
             return User::find(30);
-        });        
+        });     
+
+最後透過底下方法去做邏輯判斷，並且回傳。
+return $this->allowAPI([$all,$show]);        
 ```
 
 # Model
