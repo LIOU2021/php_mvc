@@ -24,7 +24,7 @@ class Route
 
     public static function delete($url, $controllerArr)
     {
-        self::add($url, "delete", $controllerArr);
+        self::add($url, "DELETE", $controllerArr);
     }
 
     public static function add($url, $method, $controllerArr)

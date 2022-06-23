@@ -34,13 +34,26 @@ function laravelStyle($uri)
         array_pop($uriArr);
         $uri = implode("/", $uriArr);
         $routerCondition = isset($GLOBALS['router'][$requestMethod]);
+        // dd($requestMethod);
+        // echo json_encode($GLOBALS['router'],JSON_PRETTY_PRINT);
+        // exit;
+
+        // dd($routerCondition);
+
         if ($routerCondition) {
+            $routerCondition = false;
             $urlParamObj = $GLOBALS['router'][$requestMethod];
             $urlParamKeysArr = array_keys($urlParamObj);
             foreach ($urlParamKeysArr as $index => $item) {
                 if (strpos($item, '{') && strpos($item, '}')) {
-                    $routerCondition = true;
-                    $uri = $item;
+                    $existsUrlPathArr = explode("/", $item);
+                    array_pop($existsUrlPathArr);
+                    $existsUrlPath = implode("/", $existsUrlPathArr);
+                    // dd($existsUrlPath,$uri);
+                    if ($existsUrlPath == $uri) {
+                        $routerCondition = true;
+                        $uri = $item;
+                    }
                 }
             }
         }
@@ -57,14 +70,43 @@ function laravelStyle($uri)
 
         callClassForlaravel($controllerName, $controllerMethod);
 
-        // echo json_encode($GLOBALS['router'], JSON_PRETTY_PRINT);
+        echo json_encode($GLOBALS['router'], JSON_PRETTY_PRINT);
     } else {
-        foreach ($GLOBALS['router'] as $methods => $item) {
-            if (isset($item[$uri])) {
-                helpReturn(403, "your methods:" . $requestMethod);
+        if (is_numeric($urlParam)) {
+            // dd($uri);
+
+            foreach ($GLOBALS['router'] as $methods => $item) {
+                if (isset($GLOBALS['router'][$methods])) {
+                    $urlKeys = array_keys($GLOBALS['router'][$methods]);
+                    // dd($methods,$urlKeys);
+                    foreach ($urlKeys as $item2) {
+                        if (strpos($item2, "{") && strpos($item2, "}")) {
+                            $item2Arr = explode("/",$item2);
+                            array_pop($item2Arr);
+                            $item2String = implode("/",$item2Arr);
+                            if($item2String==$uri){
+                                // dd($methods,$urlKeys);
+                                // echo json_encode($GLOBALS['router'],JSON_PRETTY_PRINT);
+                                helpReturn(403, "your methods:" . $requestMethod . ". only allow $methods of method !");
+                            }
+                        }
+                    }
+
+                }
             }
+
+            helpReturn(404, $uri."/{id}" . "@" . $requestMethod);
+        } else {
+            foreach ($GLOBALS['router'] as $methods => $item) {
+                if (isset($item[$uri])) {
+                    helpReturn(403, "your methods:" . $requestMethod . ". only allow $methods of method !");
+                }
+            }
+
+            helpReturn(404, $uri . "@" . $requestMethod);
         }
-        helpReturn(404, $uri . "@" . $requestMethod);
+
+        
     }
 }
 

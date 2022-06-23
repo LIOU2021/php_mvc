@@ -32,7 +32,7 @@ class UserController extends Controller
     public function update()
     {
         // echo 'user controller update';
-        return 'user controller update';
+        return 'user controller update : ' .$this->getUrlParam();
     }
 
     public function create()
@@ -43,11 +43,14 @@ class UserController extends Controller
 
     public function show(){
         // echo 'user controller show';
-        return 'user controller show';
+        // return 'user controller show';
+
+        $user = new User();
+        return $user->find($this->getUrlParam());
     }
 
-    public function show2(){
-        // echo 'user controller show';
-        return 'user controller show2';
+    public function delete(){
+        // echo 'user controller delete : '.$this->getUrlParam();
+        return 'user controller delete : '.$this->getUrlParam();
     }
 }

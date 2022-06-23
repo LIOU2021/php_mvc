@@ -38,7 +38,7 @@ class Http
             return null;
         }
 
-        if (is_numeric($this->urlParam)&&!$urlParam) {
+        if (is_numeric($this->urlParam) && !$urlParam) {
             // echo 'urlParam error !';
             return null;
         }
@@ -55,7 +55,13 @@ class Http
     /**
      * 獲得url路徑最後一個值
      */
-    public function getUrlParam(){
-        return $this->urlParam;
+    public function getUrlParam()
+    {
+        $urlParam = $this->urlParam;
+        if (is_numeric($urlParam)) {
+            return $urlParam;
+        } else {
+            helpReturn(408);
+        }
     }
 }
