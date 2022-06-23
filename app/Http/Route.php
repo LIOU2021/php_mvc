@@ -32,9 +32,7 @@ class Route
         $urlParamCondition = false;
 
         if (strpos($url, '{') && strpos($url, '}')) {
-            $indexOfChar = strpos($url, '{');
             $urlParamCondition = true;
-            // echo "The string 'lazy' was found in the string\n";
         }
 
         if (self::$apiPrefixFile) {
