@@ -1,18 +1,17 @@
 # 說明
 > 自製MVC框架，參考laravel與thinkphp
 
-# 路由命名規則
-> /controller/method/{id?}
-
 # config
 > config/
 
 # router
 > 兩種模式 env('ROUTERSTYLE')
 1. laravel
-2. thinkphp
+2. thinkphp。命名規則為/controller/method/{id}
 > 寫在routes/資料夾
 1. 如果是api.php的話，API路由前贅會加入"/api"
+> 路由命名規則
+1. 路由中若有urlParam，限定只能添加在最後 /controller/method/{id}
 > 注意事項
 1. 路由開頭一定要有"/"斜線，比如 /user，這是正確的。
 

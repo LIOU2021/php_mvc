@@ -9,6 +9,9 @@ switch (ROUTERSTYLE) {
     case 'laravel':
         laravelStyle($uri);
         break;
+    default:
+        helpReturn(400, "your router style : " . ROUTERSTYLE);
+        break;
 }
 
 /**
@@ -32,14 +35,14 @@ function laravelStyle($uri)
         }
         helpReturn(404, $uri . "@" . $requestMethod);
     }
+    
     $routerOjb = $GLOBALS['router'][$requestMethod][$uri];
     $controllerName = $routerOjb['controllerName'];
     $controllerMethod = $routerOjb['controllerMethod'];
-    // dd($controllerName,$controllerMethod);
-    callClassForlaravel($controllerName, $controllerMethod);
-    // dd($GLOBALS['router']);
 
-    echo json_encode($GLOBALS['router'], JSON_PRETTY_PRINT);
+    callClassForlaravel($controllerName, $controllerMethod);
+
+    // echo json_encode($GLOBALS['router'], JSON_PRETTY_PRINT);
 }
 
 
@@ -49,47 +52,24 @@ function laravelStyle($uri)
  * @param array $uri route path
  * @param string $method
  */
-function callClassForlaravel($controllerName, $controllerMethod, $uri = null, $method = null)
+function callClassForlaravel($controllerName, $controllerMethod)
 {
     $filePath = str_replace("\\", "/", $controllerName);
-    $filePath = str_replace("App", "app", $filePath)."php";
+    $filePath = "../" . str_replace("App", "app", $filePath) . ".php";
 
     if (!file_exists($filePath)) {
         helpReturn(401, "file $filePath not find !");
-    }else{
-        dd('成功');
-        //check method exists and run method
+    } else {
+
+        $class = new ReflectionClass($controllerName);
+        $controller = $class->newInstance();
+
+        if (!method_exists($controller, $controllerMethod)) {
+            helpReturn(402, "$controllerMethod of method not defind in $controllerName");
+        } else {
+            helpReturn(200, $controller->$controllerMethod());
+        }
     }
-
-    // if (!file_exists($filePath)) {
-    //     helpReturn(401, "file app/Controllers/$uri[1]Controller.php not find !");
-    // } else {
-    //     include_once($filePath);
-
-    //     $controllerName = "$uri[1]Controller";
-
-    //     $controllerPath = sprintf('App\Controllers\%s', $controllerName);
-    //     $controller = new $controllerPath();
-
-    //     $actionArray = $controller->getAction();
-
-    //     if (!in_array("*", $actionArray)) {
-    //         $requestMethod = $_SERVER['REQUEST_METHOD'];
-    //         if (!in_array($requestMethod, $actionArray)) {
-    //             helpReturn(403, "request method now : $requestMethod");
-    //         }
-    //     }
-
-    //     if ($method == null) {
-    //         $method = $uri[2];
-    //     }
-
-    //     if (!method_exists($controller, $method)) {
-    //         helpReturn(402, "$method of method not find in $controllerName");
-    //     } else {
-    //         helpReturn(200, $controller->$method());
-    //     }
-    // }
 }
 
 
