@@ -35,7 +35,7 @@ function laravelStyle($uri)
         }
         helpReturn(404, $uri . "@" . $requestMethod);
     }
-    
+
     $routerOjb = $GLOBALS['router'][$requestMethod][$uri];
     $controllerName = $routerOjb['controllerName'];
     $controllerMethod = $routerOjb['controllerMethod'];
@@ -49,8 +49,8 @@ function laravelStyle($uri)
 /**
  * Router處理-laravel
  * 
- * @param array $uri route path
- * @param string $method
+ * @param string $controllerName name of controller
+ * @param string $controllerMethod method of controller
  */
 function callClassForlaravel($controllerName, $controllerMethod)
 {
