@@ -65,3 +65,5 @@ return $this->allowAPI([$all,$show]);
 * delete
 
 > 撰寫middleware
+
+> CLI
