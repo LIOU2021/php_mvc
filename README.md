@@ -5,6 +5,8 @@
 > config/
 
 # router
+> 所有的Router 存放在 $GLOBALS['router']
+
 > 兩種模式 env('ROUTERSTYLE')
 1. laravel
 2. thinkphp。命名規則為/controller/method/{id}

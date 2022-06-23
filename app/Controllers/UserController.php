@@ -40,4 +40,14 @@ class UserController extends Controller
         // echo 'user controller create';
         return 'user controller create';
     }
+
+    public function show(){
+        // echo 'user controller show';
+        return 'user controller show';
+    }
+
+    public function show2(){
+        // echo 'user controller show';
+        return 'user controller show2';
+    }
 }

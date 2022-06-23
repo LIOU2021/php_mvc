@@ -29,19 +29,54 @@ class Route
 
     public static function add($url, $method, $controllerArr)
     {
+        $urlParamCondition = false;
+
+        if (strpos($url, '{') && strpos($url, '}')) {
+            $indexOfChar = strpos($url, '{');
+            $urlParamCondition = true;
+            // echo "The string 'lazy' was found in the string\n";
+        }
+
         if (self::$apiPrefixFile) {
             $url = "/api$url";
         }
 
-        if (
-            isset($GLOBALS['router'][$method][$url])
-            ) {
-            helpReturn(407,$url."@".$method);
+        if ($urlParamCondition) {
+            $routerAddCondition = false;
+ 
+            $uriArr = explode("/", $url);
+            array_pop($uriArr);
+            $addUri = implode("/", $uriArr);
+
+            if (isset($GLOBALS['router'][$method])) {
+                $urlObj = $GLOBALS['router'][$method];
+                $urlKeysObj = array_keys($urlObj);
+                foreach ($urlKeysObj as $index => $item) {
+                    if (strpos($item, '{') && strpos($item, '}')) {
+                        $itemArr=explode("/",$item);
+                        array_pop($itemArr);
+                        $existsUri = implode("/", $itemArr);
+
+                        if ($addUri == $existsUri) {
+                            $routerAddCondition = true;
+                        }
+
+                    }
+                }
+
+            }
         } else {
-            $GLOBALS['router'][$method][$url]= [
-                    'middleware' => null,
-                    'controllerName' => $controllerArr[0],
-                    'controllerMethod' => $controllerArr[1],
+            $routerAddCondition = isset($GLOBALS['router'][$method][$url]);
+        }
+
+        if ($routerAddCondition) {
+            helpReturn(407, $url . "@" . $method);
+        } else {
+            $GLOBALS['router'][$method][$url] = [
+                'middleware' => null,
+                'controllerName' => $controllerArr[0],
+                'controllerMethod' => $controllerArr[1],
+                'urlParamCondition' => $urlParamCondition,
             ];
         }
     }

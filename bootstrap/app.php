@@ -25,8 +25,39 @@ function laravelStyle($uri)
     require_once '../routes/web.php';
 
     $requestMethod = $_SERVER['REQUEST_METHOD'];
+    $uriArr = explode("/", $uri);
+    $uriLn = count($uriArr);
+    $urlParam = $uriArr[$uriLn - 1];
+    // dd(is_numeric($urlParam));
 
-    if (isset($GLOBALS['router'][$requestMethod]) && isset($GLOBALS['router'][$requestMethod][$uri])) {
+    if (is_numeric($urlParam)) {
+        array_pop($uriArr);
+        $uri = implode("/", $uriArr);
+        $routerCondition = isset($GLOBALS['router'][$requestMethod]);
+        if ($routerCondition) {
+            $urlParamObj = $GLOBALS['router'][$requestMethod];
+            $urlParamKeysArr = array_keys($urlParamObj);
+            foreach ($urlParamKeysArr as $index => $item) {
+                if (strpos($item, '{') && strpos($item, '}')) {
+                    $routerCondition = true;
+                    $uri = $item;
+                }
+            }
+        }
+    } else {
+        $routerCondition = isset($GLOBALS['router'][$requestMethod]) && isset($GLOBALS['router'][$requestMethod][$uri]);
+    }
+
+    if ($routerCondition) {
+        $routerOjb = $GLOBALS['router'][$requestMethod][$uri];
+        $controllerName = $routerOjb['controllerName'];
+        $controllerMethod = $routerOjb['controllerMethod'];
+
+        // dd($controllerName, $controllerMethod);
+
+        callClassForlaravel($controllerName, $controllerMethod);
+
+        // echo json_encode($GLOBALS['router'], JSON_PRETTY_PRINT);
     } else {
         foreach ($GLOBALS['router'] as $methods => $item) {
             if (isset($item[$uri])) {
@@ -35,14 +66,6 @@ function laravelStyle($uri)
         }
         helpReturn(404, $uri . "@" . $requestMethod);
     }
-
-    $routerOjb = $GLOBALS['router'][$requestMethod][$uri];
-    $controllerName = $routerOjb['controllerName'];
-    $controllerMethod = $routerOjb['controllerMethod'];
-
-    callClassForlaravel($controllerName, $controllerMethod);
-
-    // echo json_encode($GLOBALS['router'], JSON_PRETTY_PRINT);
 }
 
 
