@@ -25,7 +25,6 @@ class UserController extends Controller
             $user = new User();
             return $user->find($this->getUrlParam());
         });
-
  
         return $this->allowAPI([$all,$show]);
     }
@@ -34,5 +33,11 @@ class UserController extends Controller
     {
         // echo 'user controller update';
         return 'user controller update';
+    }
+
+    public function create()
+    {
+        // echo 'user controller create';
+        return 'user controller create';
     }
 }

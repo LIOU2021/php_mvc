@@ -4,11 +4,26 @@
 # 路由命名規則
 > /controller/method/{id?}
 
+# config
+> config/
+
+# router
+> 兩種模式 env('ROUTERSTYLE')
+1. laravel
+2. thinkphp
+> 寫在routes/資料夾
+1. 如果是api.php的話，API路由前贅會加入"/api"
+> 注意事項
+1. 路由開頭一定要有"/"斜線，比如 /user，這是正確的。
+
 # 環境變數
 > cp .env.example .env
 
 # 註冊全域變數
 > app/Providers/AppProvider
+
+# 全域function
+> app/helpers.php
 
 # Controller
 ```

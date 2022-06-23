@@ -80,8 +80,7 @@ class Model
         $pdo = null;
 
         if (!$rs) {
-            echo helpReturn(500,"your id : $id");
-            exit();
+            helpReturn(500,"your id : $id");
         }
 
         return $rs;

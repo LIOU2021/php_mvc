@@ -60,11 +60,9 @@ class Controller
         }
 
         if ($trueCount >= 2) {
-            echo helpReturn(405);
-            exit;
+            helpReturn(405);
         }else if($trueCount == 0){
-            echo helpReturn(406);
-            exit;
+            helpReturn(406);
         } else {
             return $res;
         }

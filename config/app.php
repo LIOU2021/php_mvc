@@ -13,3 +13,6 @@ define('DB_NAME', env('DB_NAME',null));
 define('DB_USER', env('DB_USER',null));
 define('DB_PASS', env('DB_PASS',null));
 
+//router
+define('ROUTERSTYLE',env('ROUTERSTYLE','thinkphp'));
+

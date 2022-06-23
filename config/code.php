@@ -1,7 +1,7 @@
 <?php
 
 return [
-    //
+    // success
     200 => "success !",
 
 
@@ -13,7 +13,8 @@ return [
     404 => "router not find !",
     405 => "only allow one method reponse, but find two or more!",
     406 => "doesn't any route match !",
+    407 => "duplicate router, already exists !",
 
     // sql error
-    500=>"find model by id, but not find !",
+    500 => "find model by id, but not find !",
 ];
