@@ -19,16 +19,31 @@ class TestController extends Controller
         return 'TestController@test';
     }
 
-    public function index(Test $wel,Request $request)
+    public function index(Request $request)
+    {
+        // dd($_REQUEST);
+        $request->age2=100;
+        $request->age=1012;
+        $request->params2 ='test';
+        // return $request->age2;
+        return $request->all();
+        return $request->age;
+        return $request->name;
+        return $request->all();
+        // return $request->getUrl();
+        return $request->all();
+    }
+
+    public function index5(Test $wel, Request $request)
     {
         echo $wel->index();
-        return $request->getUrlParam()."$this->test";
+        return $request->getUrlParam() . "$this->test";
     }
 
     public function index3()
     {
-        $request = new Request ();
-        return $request->getUrlParam()."$this->test";
+        $request = new Request();
+        return $request->getUrlParam() . "$this->test";
     }
 
     public function index1(Request $request, string $p2)

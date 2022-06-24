@@ -22,6 +22,24 @@
 2. thinkphp模式下，路由中若有urlParam，限定只能添加在最後 ex:/user/{id}
 3. laravel模式下，如果路由有使用urlParam的格式的話，那麼{id}為必填格式
 
+# request
+```
+自動DI後:
+
+//api/user?id=2
+$request->id;//2
+
+//api/user?age=10&name=mark
+$request->age;//10
+$request->name;//mark
+
+$request->getUrlParam();//獲得url路徑最後一個值
+$request->getRequestMethod();//獲得當前請求的方法
+$request->all();//獲取request的所有payload參數
+
+```
+> 其他方法請直接參考 app\Http\Request.php
+
 # 環境變數
 > cp .env.example .env
 

@@ -50,6 +50,9 @@ class Model
         }
     }
 
+    /**
+     * all model data
+     */
     public function all()
     {
         $pdo = $this->make();

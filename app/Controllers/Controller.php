@@ -7,19 +7,12 @@ use App\Http\Http;
 class Controller
 {
 
-    private $http;
-
     /**
      * 該Controller所支持的request methods
      * 
      * 如果無特別覆寫，那麼將會支持全部的request methods
      */
     protected $action = ["*"];
-
-    public function __construct()
-    {
-        $this->http = new Http();
-    }
 
     /**
      * Get request accept method
@@ -40,7 +33,7 @@ class Controller
      */
     public function limitAPI(string $method, bool $urlParam = false, callable $callback)
     {
-        $http = $this->http;
+        $http = new Http();
         return $http->accept($method, $urlParam, $callback);
     }
 
@@ -72,6 +65,6 @@ class Controller
      * 獲得url路徑最後一個值
      */
     public function getUrlParam(){
-        return $this->http->getUrlParam();
+        return (new Http())->getUrlParam();
     }
 }

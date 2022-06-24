@@ -21,4 +21,10 @@ return [
 
     // sql error
     500 => "find model by id, but not find !",
+
+    //class error
+    601 => "try to call private property !",
+    602 => "try to call undefined property !",
+    603 => "try to set private property !",
+    604 => "try to set undefined property !",
 ];
