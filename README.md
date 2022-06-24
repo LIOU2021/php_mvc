@@ -72,9 +72,11 @@ php minicli make:model User
 
 > 參數從左至右，如果有使用DI，DI優先在左
 
-> DI 目前只支援Router呼叫的那個class(大部分都是controller)的function做。該class的建構子，與被DI的Class中的建構子並不會被DI
+> DI 目前只支援Router呼叫的那個class(大部分都是controller)做。該class中所被DI的Class中的建構子並不會被DI
 
-> 開啟DI模式的話，被Router所呼叫、引用的Class的建構子中不可以有參數，否則會拋出410錯誤
+> 開啟DI模式的話，Router中被DI的Class中的建構子不可以有參數，否則會拋出410錯誤
+
+> DI 只支援到一層。比如UserController 可以DI UserRepository，但UserRepository中的建構子若還有參數，將會拋錯
 
 # 待開發
 > 撰寫model的ORM

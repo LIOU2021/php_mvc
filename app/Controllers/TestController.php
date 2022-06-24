@@ -3,12 +3,13 @@
 namespace App\Controllers;
 
 use App\Http\Request;
+use App\Http\Test;
 
 class TestController extends Controller
 {
     private $test;
 
-    public function __construct()
+    public function __construct(Request $request)
     {
         $this->test = 'TestController的建構子';
     }
@@ -18,15 +19,16 @@ class TestController extends Controller
         return 'TestController@test';
     }
 
-    public function index(Request $request)
+    public function index(Test $wel,Request $request)
     {
+        echo $wel->index();
         return $request->getUrlParam()."$this->test";
     }
 
     public function index3()
     {
-        // $request = new Request ();
-        // return $request->getUrlParam()."$this->test";
+        $request = new Request ();
+        return $request->getUrlParam()."$this->test";
     }
 
     public function index1(Request $request, string $p2)
