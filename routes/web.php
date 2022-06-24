@@ -1,7 +1,6 @@
 <?php
 
-use App\Controllers\UserController;
+use App\Controllers\WelcomeController;
 use App\Http\Route;
 
-Route::get('/user',[UserController::class,'index']);
-Route::get('/user/{id}',[UserController::class,'show']);
+Route::get('/',[WelcomeController::class,"index"]);

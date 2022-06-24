@@ -7,18 +7,20 @@ class controller
     private $fileName;
     private $filePath;
     private $printer;
+    private $file;
 
-    public function __construct($name, $filePath = "app/Controllers")
+    public function __construct($name)
     {
         $this->printer = new CliPrinter();
-        $this->filePath = $filePath;
-        
+        $this->filePath = "app/Controllers";
+
         if (!$name) {
             $this->getPrinter()->display("ERROR: Command, lose arg like 'php minicli make:controller UserController' .");
             exit;
         }
 
         $this->fileName = $name;
+        $this->file = $this->filePath . "/" .$this->fileName.'.php';
     }
 
     public function getPrinter()
@@ -28,9 +30,21 @@ class controller
 
     public function make()
     {
-        $content = "111111111111";
+        if(file_exists($this->file)){
+            $this->getPrinter()->display("ERROR: Command, this file already exists - $this->file .");
+            exit;
+        }
 
-        file_put_contents($this->filePath . "/" . time() . '_test.php', $content);
+        $content = "<?php
+
+namespace App\Controllers;
+
+class $this->fileName extends Controller
+{
+
+}";
+
+        file_put_contents($this->file, $content);
 
         return $this->fileName;
     }
