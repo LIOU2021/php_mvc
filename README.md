@@ -55,6 +55,10 @@ return $this->allowAPI([$all,$show]);
 # database 資料夾
 > 單純放sql紀錄。本專案不打算開發類似migration的功能
 
+# CLI
+> php minicli help
+> php minicli make:controller UserController
+
 # 待開發
 > 撰寫model的ORM
 

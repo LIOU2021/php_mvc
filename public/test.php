@@ -1,24 +1,52 @@
 <?php
 
-require_once '../vendor/autoload.php';
+class Test
+{
+    protected $arr = [];
 
-use App\Controllers\UserController;
-use App\Models\User;
-use App\Providers\AppProvider;
+    public function __construct()
+    {
+        $arr['hello'] = function () {
+            echo 'hello';
+        };
 
-AppProvider::register();
-// var_dump($envArr);
+        $arr['help'] = function () {
+            echo 'hello';
+        };
+    }
 
-var_dump(env('SITENAME',null));
-echo "<br>";
+    public function registry($cli, $callback)
+    {
+        $this->arr[$cli] = $callback;
+    }
 
-// $classPath = sprintf('App\Controllers\%s', "UserController");
-// $class = new $classPath;
-// $class->index();
+    public function getCommand($cli)
+    {
+        return isset($this->arr[$cli]) ? $this->arr[$cli] : null;
+    }
 
-// $test = new UserController();
-// $test->index();
+    public function run($name)
+    {
+        $command = $this->getCommand($name);
+        // var_dump($command);
+        // $this->arr[$name];
+        // var_dump($this->arr);
+        call_user_func($command);
+    }
+}
 
-// $user = new User();
-// $user->all();
-// echo 'test123';
+// $test = new Test();
+
+// $test->registry('help',function(){
+//     echo 'test111';
+// });
+
+// $test->run('help');
+
+$arr['help']=function(){
+    echo 'test222';
+};
+
+// var_dump($arr['help']);
+// call_user_func($arr['help']);
+$arr['help']();

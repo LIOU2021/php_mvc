@@ -1,0 +1,31 @@
+<?php
+
+if (php_sapi_name() !== 'cli') {
+    exit;
+}
+
+require __DIR__ . '/vendor/autoload.php';
+
+use App\Minicli\App;
+use App\Minicli\controller;
+
+$app = new App();
+
+$app->registerCommand('hello', function (array $argv) use ($app) {
+    $name = isset ($argv[2]) ? $argv[2] : "World";
+    $app->getPrinter()->display("Hello $name!!!");
+});
+
+$app->registerCommand('make:controller', function (array $argv) use ($app) {
+    $controller = new controller($argv[2]);
+    $creater = $controller->make();
+    $app->getPrinter()->display("create $creater of controller success !");
+});
+
+
+$app->registerCommand('help', function (array $argv) use ($app) {
+    $res = $app->getAllCommandList();
+    $app->getPrinter()->display(json_encode($res,JSON_PRETTY_PRINT));
+});
+
+$app->runCommand($argv);
