@@ -81,21 +81,20 @@ function laravelStyle($uri)
                     // dd($methods,$urlKeys);
                     foreach ($urlKeys as $item2) {
                         if (strpos($item2, "{") && strpos($item2, "}")) {
-                            $item2Arr = explode("/",$item2);
+                            $item2Arr = explode("/", $item2);
                             array_pop($item2Arr);
-                            $item2String = implode("/",$item2Arr);
-                            if($item2String==$uri){
+                            $item2String = implode("/", $item2Arr);
+                            if ($item2String == $uri) {
                                 // dd($methods,$urlKeys);
                                 // echo json_encode($GLOBALS['router'],JSON_PRETTY_PRINT);
                                 helpReturn(403, "your methods:" . $requestMethod . ". only allow $methods of method !");
                             }
                         }
                     }
-
                 }
             }
 
-            helpReturn(404, $uri."/{id}" . "@" . $requestMethod);
+            helpReturn(404, $uri . "/{id}" . "@" . $requestMethod);
         } else {
             foreach ($GLOBALS['router'] as $methods => $item) {
                 if (isset($item[$uri])) {
@@ -105,8 +104,6 @@ function laravelStyle($uri)
 
             helpReturn(404, $uri . "@" . $requestMethod);
         }
-
-        
     }
 }
 
@@ -132,7 +129,9 @@ function callClassForlaravel($controllerName, $controllerMethod)
         if (!method_exists($controller, $controllerMethod)) {
             helpReturn(402, "$controllerMethod of method not defind in $controllerName");
         } else {
-            helpReturn(200, $controller->$controllerMethod());
+            // dd($controllerName,$controllerMethod);
+            helpReturn(200, callDI($controllerName, $controllerMethod, $controller));
+            // helpReturn(200, $controller->$controllerMethod());
         }
     }
 }
@@ -205,5 +204,57 @@ function callClassForThinkphp($uri, $method = null)
         } else {
             helpReturn(200, $controller->$method());
         }
+    }
+}
+
+function callDI(string $controller, string $method, $controllerInstance)
+{
+    // return $controllerInstance->$method();
+
+    // $class = new ReflectionClass($controller);
+    // $method = $class->getMethod($method);
+    // $parameters = $method->getParameters();
+
+    // dd($controller);
+    $classMethod = new ReflectionMethod($controller, $method);
+    $parameters = $classMethod->getParameters();
+
+    $counter = 0;
+    $diArr=[];
+    if (count($parameters)) {
+        foreach ($parameters as $parameter) {
+
+            $dependenceClass = (string) $parameter->getType()->getName();
+            
+            $need = checkNeedDI($dependenceClass);
+            if (!$counter && $need) {
+                $class = new ReflectionClass($dependenceClass);
+                $instance = $class->newInstance();
+                $diArr[]=$instance;
+            } else {
+                helpReturn(409, "your arg type find : " . $dependenceClass);
+            }
+
+            if($counter>1&& !$need){
+                helpReturn(409, "your arg type find : " . $dependenceClass);
+            }
+
+            $counter++;
+        }
+
+        return $controllerInstance->$method(...$diArr);
+    } else {
+        return $controllerInstance->$method();
+    }
+}
+
+function checkNeedDI(string $type)
+{
+    if (strpos($type, "\\")) {
+        return true;
+        // return "use DI : " . $type;
+    } else {
+        return false;
+        // return "don't use DI : " . $type;
     }
 }

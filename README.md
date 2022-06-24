@@ -1,6 +1,8 @@
 # 說明
 > 自製MVC框架，參考laravel與thinkphp
 
+> use php7.4
+
 # config
 > config/
 
@@ -62,6 +64,10 @@ php minicli help
 php minicli make:controller UserController
 php minicli make:model User
 ``` 
+> 如果在minicli註冊新的command的話，必須在help之前註冊，否則使用help指令時將會無法查詢到後續新增的指令
+
+# DI 
+> 參數從左至右，如果有使用DI，DI優先在左
 
 # 待開發
 > 撰寫model的ORM
@@ -74,4 +80,4 @@ php minicli make:model User
 
 > 撰寫middleware
 
-> CLI
+> 實作DI(只for laravel router style, thinkphp還要測試)
