@@ -32,6 +32,7 @@ class UserController extends Controller
     public function update()
     {
         // echo 'user controller update';
+        // return 'user controller update';
         return 'user controller update : ' .$this->getUrlParam();
     }
 

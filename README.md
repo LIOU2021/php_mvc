@@ -11,15 +11,16 @@
 
 > 兩種模式 env('ROUTERSTYLE')
 1. laravel
-2. thinkphp。命名規則為/controller/method/{id}
+2. thinkphp。命名規則為/controller/method/{id}。
+3. thinkphp 模式下 /controller/method/{id} 與 /controller/method 導向的controller@method是一樣的
 
 > 寫在routes/資料夾
 1. 如果是api.php的話，API路由前贅會加入"/api"
 
 > 注意事項
 1. 路由開頭一定要有"/"斜線，比如 /user，這是正確的。
-2. 路由中若有urlParam，限定只能添加在最後 ex:/user/{id}
-3. 如果路由有使用urlParam的格式的話，那麼{id}為必填格式
+2. thinkphp模式下，路由中若有urlParam，限定只能添加在最後 ex:/user/{id}
+3. laravel模式下，如果路由有使用urlParam的格式的話，那麼{id}為必填格式
 
 # 環境變數
 > cp .env.example .env
@@ -67,7 +68,13 @@ php minicli make:model User
 > 如果在minicli註冊新的command的話，必須在help之前註冊，否則使用help指令時將會無法查詢到後續新增的指令
 
 # DI 
+> DI 模式只支援laravel router模式
+
 > 參數從左至右，如果有使用DI，DI優先在左
+
+> DI 目前只支援Router呼叫的那個class(大部分都是controller)的function做。該class的建構子，與被DI的Class中的建構子並不會被DI
+
+> 開啟DI模式的話，被Router所呼叫、引用的Class的建構子中不可以有參數，否則會拋出410錯誤
 
 # 待開發
 > 撰寫model的ORM

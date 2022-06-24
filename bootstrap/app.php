@@ -130,8 +130,16 @@ function callClassForlaravel($controllerName, $controllerMethod)
             helpReturn(402, "$controllerMethod of method not defind in $controllerName");
         } else {
             // dd($controllerName,$controllerMethod);
-            helpReturn(200, callDI($controllerName, $controllerMethod, $controller));
-            // helpReturn(200, $controller->$controllerMethod());
+            if(DI){
+                helpReturn(200, callDI($controllerName, $controllerMethod, $controller));
+            }else{
+                if(!count($class->getMethod($controllerMethod)->getParameters())){
+                    helpReturn(200, $controller->$controllerMethod());
+                }else{
+                    helpReturn(411,"check ".$controllerName."@".$controllerMethod);
+                };
+                
+            }
         }
     }
 }
@@ -173,6 +181,7 @@ function thinkphpStyle($uri)
  */
 function callClassForThinkphp($uri, $method = null)
 {
+    $uri[1][0]=strtoupper($uri[1][0]);
 
     $filePath = "../app/Controllers/$uri[1]Controller.php";
 
@@ -209,33 +218,33 @@ function callClassForThinkphp($uri, $method = null)
 
 function callDI(string $controller, string $method, $controllerInstance)
 {
-    // return $controllerInstance->$method();
-
-    // $class = new ReflectionClass($controller);
-    // $method = $class->getMethod($method);
-    // $parameters = $method->getParameters();
-
-    // dd($controller);
     $classMethod = new ReflectionMethod($controller, $method);
     $parameters = $classMethod->getParameters();
 
     $counter = 0;
-    $diArr=[];
+    $diArr = [];
     if (count($parameters)) {
         foreach ($parameters as $parameter) {
 
             $dependenceClass = (string) $parameter->getType()->getName();
-            
+
             $need = checkNeedDI($dependenceClass);
             if (!$counter && $need) {
                 $class = new ReflectionClass($dependenceClass);
-                $instance = $class->newInstance();
-                $diArr[]=$instance;
+                if(!count($class->getMethod("__construct")->getParameters())){
+                    $instance = $class->newInstance();
+                }else{
+                    helpReturn(410,'check : '.$dependenceClass);
+                };
+                
+
+
+                $diArr[] = $instance;
             } else {
                 helpReturn(409, "your arg type find : " . $dependenceClass);
             }
 
-            if($counter>1&& !$need){
+            if ($counter > 1 && !$need) {
                 helpReturn(409, "your arg type find : " . $dependenceClass);
             }
 

@@ -14,7 +14,9 @@ return [
     406 => "doesn't any route match !",
     407 => "duplicate router, already exists !",
     408 => "not match urlParam API format !",
-    409 => "controller arg error for fail DI ! ",
+    409 => "DI fail : controller arg error ! ",
+    410 => "DI fail : construct of Class have some argument !",
+    411 => "DI fail : method of Class have some argument !",
 
     // sql error
     500 => "find model by id, but not find !",

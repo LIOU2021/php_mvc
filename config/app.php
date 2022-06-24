@@ -1,5 +1,8 @@
 <?php
-//debug
+//DI模式
+define('DI', env('DI',false));
+
+//debug模式
 define('debug', env('debug',false));
 
 // 網站名稱

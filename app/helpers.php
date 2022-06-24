@@ -21,13 +21,26 @@ if (!function_exists('helpReturn')) {
         if ($status != 200) {
             header("HTTP/1.1 404 Not Found");
         }
+
         header('Content-Type: application/json; charset=utf-8');
         $code = require_once('../config/code.php');
         $res['status'] = $status;
-        $res['msg'] = $code[$status];
-        $res['data'] = $data;
-        echo json_encode($res);
-        exit;
+
+        if(isset($code[$status])){
+            $res['msg'] = $code[$status];
+            $res['data'] = $data;
+            echo json_encode($res);
+            exit;
+        }else{
+            header("HTTP/1.1 404 Not Found");
+            
+            $res['status'] = null;
+            $res['msg'] = 'error code not defind : '.$status;
+            $res['data'] = null;
+            echo json_encode($res);
+            exit;
+        }
+        
     }
 }
 
