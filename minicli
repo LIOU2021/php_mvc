@@ -7,7 +7,8 @@ if (php_sapi_name() !== 'cli') {
 require __DIR__ . '/vendor/autoload.php';
 
 use App\Minicli\App;
-use App\Minicli\controller;
+use App\Minicli\Controller;
+use App\Minicli\Model;
 
 $app = new App();
 
@@ -17,9 +18,15 @@ $app->registerCommand('hello', function (array $argv) use ($app) {
 });
 
 $app->registerCommand('make:controller', function (array $argv) use ($app) {
-    $controller = new controller($argv[2]);
+    $controller = new Controller($argv[2]);
     $creater = $controller->make();
     $app->getPrinter()->display("create $creater of controller success !");
+});
+
+$app->registerCommand('make:model', function (array $argv) use ($app) {
+    $model = new Model($argv[2]);
+    $creater = $model->make();
+    $app->getPrinter()->display("create $creater of model success !");
 });
 
 

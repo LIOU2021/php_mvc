@@ -60,6 +60,7 @@ return $this->allowAPI([$all,$show]);
 php minicli help
 
 php minicli make:controller UserController
+php minicli make:model User
 ``` 
 
 # 待開發
