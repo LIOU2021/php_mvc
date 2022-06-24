@@ -86,5 +86,3 @@ php minicli make:model User
 * delete
 
 > 撰寫middleware
-
-> 實作DI(只for laravel router style, thinkphp還要測試)
