@@ -10,7 +10,7 @@ class UserController extends Controller
 {
 
     private $repo;
-    
+
     /**
      * 宣告該Controller可支援的請求方法
      * 
@@ -34,31 +34,30 @@ class UserController extends Controller
                     $user = new User();
                     return $user->all();
                 });
-        
+
                 $show = $this->limitAPI('GET', true, function () {
                     $user = new User();
                     return $user->find($this->getUrlParam());
                 });
-        
+
                 return $this->allowAPI([$all, $show]);
                 break;
             default:
-            return 'test...';
+                return 'test...';
                 break;
         }
     }
 
-    public function update()
+    public function update(Request $request)
     {
-        // echo 'user controller update';
-        // return 'user controller update';
-        return 'user controller update : ' . $this->getUrlParam();
+        $id = $request->getUrlParam();
+
+        return $this->repo->update($id,$request);
     }
 
-    public function create()
+    public function create(Request $request)
     {
-        // echo 'user controller create';
-        return 'user controller create';
+        return $this->repo->create($request);
     }
 
     public function show(Request $request)
@@ -68,7 +67,6 @@ class UserController extends Controller
 
     public function delete()
     {
-        // echo 'user controller delete : '.$this->getUrlParam();
-        return 'user controller delete : ' . $this->getUrlParam();
+        return $this->repo->delete($this->getUrlParam());
     }
 }

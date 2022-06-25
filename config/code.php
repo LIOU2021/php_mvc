@@ -21,6 +21,8 @@ return [
 
     // sql error
     500 => "find model by id, but not find !",
+    501 => "doesn't have any query string, please set query first !",
+    502 => "create User of Model : name cannot be null !",
 
     //class error
     601 => "try to call private property !",

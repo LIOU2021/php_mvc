@@ -3,6 +3,8 @@
 
 > use php7.4
 
+> use mysql
+
 # config
 > config/
 
@@ -73,6 +75,34 @@ return $this->allowAPI([$all,$show]);
 
 > sql的create database與table需要自行透過sql新增
 
+```
+方法
+
+User:find($id);
+
+User:all();
+
+// find user by id 
+$user = new User();
+$name = $request->name;
+$name = prepare($name);
+$user->query("select * from user where name = $name;");
+// return $model->getQuery(); //get query string
+return $user->exec();
+
+// update user by id
+$id = $request->getUrlParam();
+$originUserData = $user->find($id);
+$name = $request->name??$originUserData['name'];
+$email = $request->email??$originUserData['email'];
+$phone = $request->phone??$originUserData['phone'];
+$name = prepare($name);
+$email = prepare($email);
+$phone = prepare($phone);
+$user->query("update user set name = $name , email = $email , phone = $phone where id = $id;");
+return $user->exec();
+
+```
 # database 資料夾
 > 單純放sql紀錄。本專案不打算開發類似migration的功能
 

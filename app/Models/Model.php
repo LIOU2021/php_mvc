@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use Exception;
+use mysqli_sql_exception;
 use PDO;
 use PDOException;
 
 class Model
 {
     private $className;
+    private $query;
 
     public function __construct()
     {
@@ -17,11 +20,6 @@ class Model
         $class = strtolower($class[$ln - 1]);
         $this->className = $class;
     }
-
-    // public function getClassName()
-    // {
-    //     return $this->className;
-    // }
 
     /**
      * connect DB
@@ -51,6 +49,60 @@ class Model
     }
 
     /**
+     * input sql query
+     * 
+     */
+    public function query(string $query)
+    {
+        $this->query .= $query;
+    }
+
+    /**
+     * get current query string
+     * 
+     */
+    public function getQuery()
+    {
+        return $this->query;
+    }
+
+    /**
+     * execute query
+     * 
+     */
+    public function exec()
+    {
+        $pdo = $this->make();
+
+        if ($this->query) {
+            $sql = $this->query;
+        } else {
+            helpReturn(501, get_caller_info());
+        }
+
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+
+
+        try {
+            $rs =  $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (
+            Exception $e
+        ) {
+            $rs=null;
+            // dd(123);
+            // dd($e->getMessage());
+        }
+
+
+
+
+        $pdo = null;
+        return $rs??null;
+    }
+
+    /**
      * all model data
      */
     public function all()
@@ -68,6 +120,10 @@ class Model
         return $rs;
     }
 
+    /**
+     * find model data by id
+     * 
+     */
     public function find($id)
     {
         $pdo = $this->make();
@@ -83,7 +139,7 @@ class Model
         $pdo = null;
 
         if (!$rs) {
-            helpReturn(500,"your id : $id");
+            helpReturn(500, "your id : $id");
         }
 
         return $rs;

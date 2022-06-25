@@ -31,7 +31,8 @@ class Request
             if (isset($this->params[$property])) {
                 return $this->params[$property];
             } else {
-                helpReturn(602, $property);
+                return null;
+                // helpReturn(602, $property);
             }
         }
     }
