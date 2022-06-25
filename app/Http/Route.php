@@ -69,12 +69,17 @@ class Route
             helpReturn(407, $url . "@" . $method);
         } else {
             if (count(self::getMiddleware())) {
+                // if($url !="/api/test/{id}"){
+                //     dd($url);
+                // };
                 $GLOBALS['router'][$method][$url] = [
                     'middleware' => self::getMiddleware(),
                     'controllerName' => $controllerArr[0],
                     'controllerMethod' => $controllerArr[1],
                     'urlParamCondition' => $urlParamCondition,
                 ];
+                self::setMiddleware([]);
+                // $this->middleware=[];
             } else {
                 $GLOBALS['router'][$method][$url] = [
                     'middleware' => [],
@@ -92,10 +97,10 @@ class Route
         return $route->setMiddleware($middleware);
     }
 
-    public function setMiddleware(array $middleware)
+    public static function setMiddleware(array $middleware)
     {
         self::$middleware = $middleware;
-        return $this;
+        return new self;
     }
 
     public static function getMiddleware()

@@ -8,6 +8,7 @@ require __DIR__ . '/vendor/autoload.php';
 
 use App\Minicli\App;
 use App\Minicli\Controller;
+use App\Minicli\Middleware;
 use App\Minicli\Model;
 
 $app = new App();
@@ -27,6 +28,12 @@ $app->registerCommand('make:model', function (array $argv) use ($app) {
     $model = new Model($argv[2]);
     $creater = $model->make();
     $app->getPrinter()->display("create $creater of model success !");
+});
+
+$app->registerCommand('make:middleware', function (array $argv) use ($app) {
+    $model = new Middleware($argv[2]);
+    $creater = $model->make();
+    $app->getPrinter()->display("create $creater of middleware success !");
 });
 
 

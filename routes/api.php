@@ -10,9 +10,10 @@ Route::get('/user/{id}', [UserController::class, 'show']);
 Route::delete('/user/{id}', [UserController::class, 'delete']);
 Route::put('/user/{id}', [UserController::class, 'update']);
 
-// Route::middleware(['auth'])->get('/test/{id}', [TestController::class, 'show']);
-Route::middleware(['auth'])->get('/test', [TestController::class, 'index']);
+Route::middleware(['auth','test'])->get('/test/{id}', [TestController::class, 'show']);
+// Route::middleware(['auth','test'])->get('/test', [TestController::class, 'show']);
+// Route::middleware(['test'])->get('/test', [TestController::class, 'index']);
 
 // Route::get('/test', [TestController::class, 'index']);
 // Route::delete('/test', [TestController::class, 'index']);
-Route::get('/test/{id}', [TestController::class, 'show']);
+// Route::get('/test/{id}', [TestController::class, 'show']);

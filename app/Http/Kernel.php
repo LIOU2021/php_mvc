@@ -14,6 +14,7 @@ class Kernel
      */
     protected $routeMiddleware = [
         'auth' => \App\Http\Middleware\AuthMiddleware::class,
+        'test' => \App\Http\Middleware\TestMiddleware::class,
     ];
 
     public function getRouteMiddleware(){

@@ -23,6 +23,9 @@ function laravelStyle($uri)
     $reflectionClass = new ReflectionClass('App\Http\Route');
     $reflectionClass->getProperty('apiPrefixFile')->setValue(false);
     require_once '../routes/web.php';
+    
+    // echo json_encode($GLOBALS['router'],JSON_PRETTY_PRINT);
+    // exit;
 
     $requestMethod = $_SERVER['REQUEST_METHOD'];
     $uriArr = explode("/", $uri);
@@ -53,15 +56,21 @@ function laravelStyle($uri)
                     if ($existsUrlPath == $uri) {
                         $routerCondition = true;
                         $uri = $item;
-                        runMiddleware($item,$requestMethod);
+                        runMiddleware($item, $requestMethod);
                     }
                 }
             }
         }
     } else {
         $routerCondition = isset($GLOBALS['router'][$requestMethod]) && isset($GLOBALS['router'][$requestMethod][$uri]);
-        if($routerCondition){
-            runMiddleware($uri,$requestMethod);
+
+        // dd(
+        //     $uri,
+        //     $requestMethod,
+        // );
+
+        if ($routerCondition) {
+            runMiddleware($uri, $requestMethod);
         }
     }
 
@@ -142,9 +151,9 @@ function callClassForlaravel($controllerName, $controllerMethod)
         } else {
 
             if (!DI) {
-                helpReturn(410,"check : $controllerName");
+                helpReturn(410, "check : $controllerName");
             }
-            
+
             foreach ($parameters as $parameter) {
                 $argType = (string)$parameter->getType()->getName();
 
@@ -325,28 +334,31 @@ function checkNeedDI(string $type)
 /**
  * run middleware 
  */
-function runMiddleware($uri,$method){
-    $router=$GLOBALS['router'][$method][$uri];
-    if(count($router['middleware'])){
+function runMiddleware($uri, $method)
+{
+ 
+    $router = $GLOBALS['router'][$method][$uri];
+
+    if (count($router['middleware'])) {
         //run middleware
         $kernelClass = new ReflectionClass("App\\Http\\Kernel");
         $kernelInstance = $kernelClass->newInstance();
-        $routerMiddleware=$kernelInstance->getRouteMiddleware();
-        foreach($router['middleware'] as $item){
-            if(isset($routerMiddleware[$item])){
-                $middlewareClassName=$routerMiddleware[$item];
-                if(class_exists($middlewareClassName)){
+        $routerMiddleware = $kernelInstance->getRouteMiddleware();
+        foreach ($router['middleware'] as $item) {
+            if (isset($routerMiddleware[$item])) {
+                $middlewareClassName = $routerMiddleware[$item];
+                if (class_exists($middlewareClassName)) {
                     $middlewareClass = new ReflectionClass($middlewareClassName);
                     $middlewareInstance = $middlewareClass->newInstance();
                     // dd($middlewareInstance->run());
                     $middlewareInstance->run();
-                }else{
-                    helpReturn(701,$middlewareClassName);
+                    // dd('middleware run不停 !');
+                } else {
+                    helpReturn(701, $middlewareClassName);
                 }
-            }else{
-                helpReturn(700,"not find : ".$item);
+            } else {
+                helpReturn(700, "not find : " . $item);
             };
         }
-        
     };
 }

@@ -19,9 +19,10 @@ class TestController extends Controller
     }
 
     public function show(
-        Request $request
+        // Request $request
     ){
         // return $this->url;
+        $request=new Request();
         return $request->getUrl();
         // return 'run';
     }

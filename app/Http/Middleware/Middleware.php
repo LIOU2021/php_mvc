@@ -16,23 +16,28 @@ class Middleware
         return true;
     }
 
+    public function getRedirectUrl()
+    {
+        $this->redirect;
+    }
+
     final public function run()
     {
-        if(DI){
+        if (DI) {
             $currentMiddlewarName = static::class;
-            $currentMiddlewarClass=new ReflectionClass($currentMiddlewarName);
-            $currentMiddlewarParameters=$currentMiddlewarClass->getMethod("handle")->getParameters();
+            $currentMiddlewarClass = new ReflectionClass($currentMiddlewarName);
+            $currentMiddlewarParameters = $currentMiddlewarClass->getMethod("handle")->getParameters();
 
-            if(count($currentMiddlewarParameters)){
+            if (count($currentMiddlewarParameters)) {
                 foreach ($currentMiddlewarParameters as $parameter) {
                     $argType = (string)$parameter->getType()->getName();
 
                     if (!checkNeedDI($argType)) {
-                        helpReturn(702, "check handle(): ".$currentMiddlewarName.' - find : ' . $argType);
+                        helpReturn(702, "check handle(): " . $currentMiddlewarName . ' - find : ' . $argType);
                     }
-    
+
                     $instanceReflection = new ReflectionClass($argType);
-    
+
                     if ($instanceReflection->hasMethod("__construct") && count($instanceReflection->getMethod("__construct")->getParameters())) {
                         helpReturn(703, 'check : ' . $argType);
                     } else {
@@ -41,20 +46,19 @@ class Middleware
                 }
 
                 $handleCondition = $this->handle(...$instance);
-
-            }else{
+            } else {
                 $handleCondition = $this->handle();
             }
-        }else{
+        } else {
             $handleCondition = $this->handle();
         }
-        
+
         if ($handleCondition) {
             // go to next request
             return true;
         } else {
             // go to redirect url
-            header('Location: '.$this->redirect);
+            header('Location: ' . $this->redirect);
             return false;
         };
     }

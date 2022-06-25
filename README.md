@@ -112,6 +112,7 @@ php minicli help
 
 php minicli make:controller UserController
 php minicli make:model User
+php minicli make:middleware TestMiddleware
 ``` 
 > 如果在minicli註冊新的command的話，必須在help之前註冊，否則使用help指令時將會無法查詢到後續新增的指令
 
@@ -130,9 +131,16 @@ php minicli make:model User
 
 > thinkphp router style 不支援DI，所以Controller的建構子與方法不可以有參數
 
-# 待開發
+# Middleware
+> 如果DI模式開啟的話，在middleware中的handle(Request $request)會自動實現DI，否則$request就是null
+> 建立Middleware後，要在app\Http\Kernel.php的$routeMiddleware中增加對應的值才能使用
+```
+使用方法
 
-> 撰寫middleware
-> cli 寫make:middleware
+Route::middleware(['auth','test'])->get('/test/{id}', [TestController::class, 'show']);
+Route::middleware(['auth','test'])->get('/test', [TestController::class, 'show']);
+Route::middleware(['test'])->get('/test', [TestController::class, 'index']);
+```
+# 待開發
 
 > 最後測試在ubuntu能否正常運作
