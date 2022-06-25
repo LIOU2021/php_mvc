@@ -12,3 +12,4 @@ Route::put('/user/{id}',[UserController::class,'update']);
 
 Route::get('/test',[TestController::class,'index']);
 Route::delete('/test',[TestController::class,'index']);
+Route::get('/test/{id}',[TestController::class,'show']);

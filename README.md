@@ -122,10 +122,16 @@ php minicli make:model User
 
 > DI 目前只支援Router呼叫的那個class(大部分都是controller)做。該class中所被DI的Class中的建構子並不會被DI
 
-> 開啟DI模式的話，Router中被DI的Class中的建構子不可以有參數，否則會拋出410錯誤
+> 關閉DI模式的話，Router中使用DI的Class中的建構子不可以有參數，否則會拋出410錯誤
+
+> 關閉DI模式的話，Router中使用DI的Class中的方法不可以有參數，否則會拋出411錯誤
 
 > DI 只支援到一層。比如UserController 可以DI UserRepository，但UserRepository中的建構子若還有參數，將會拋錯
+
+> thinkphp router style 不支援DI，所以Controller的建構子與方法不可以有參數
 
 # 待開發
 
 > 撰寫middleware
+
+> 最後測試在ubuntu能否正常運作

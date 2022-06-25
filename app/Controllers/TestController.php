@@ -8,10 +8,22 @@ use App\Http\Test;
 class TestController extends Controller
 {
     private $test;
+    private $url;
 
-    public function __construct(Request $request)
+    public function __construct(
+        // Request $request
+        )
     {
+        // $this->url=$request->getUrl();
         $this->test = 'TestController的建構子';
+    }
+
+    public function show(
+        Request $request
+    ){
+        // return $this->url;
+        return $request->getUrl();
+        // return 'run';
     }
 
     public function index2(string $p2)
@@ -32,22 +44,5 @@ class TestController extends Controller
         return $request->all();
         // return $request->getUrl();
         return $request->all();
-    }
-
-    public function index5(Test $wel, Request $request)
-    {
-        echo $wel->index();
-        return $request->getUrlParam() . "$this->test";
-    }
-
-    public function index3()
-    {
-        $request = new Request();
-        return $request->getUrlParam() . "$this->test";
-    }
-
-    public function index1(Request $request, string $p2)
-    {
-        return 'TestController@test2';
     }
 }

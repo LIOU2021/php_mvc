@@ -136,6 +136,11 @@ function callClassForlaravel($controllerName, $controllerMethod)
             $instance = $class->newInstance();
             $controller = $instance;
         } else {
+
+            if (!DI) {
+                helpReturn(410,"check : $controllerName");
+            }
+            
             foreach ($parameters as $parameter) {
                 $argType = (string)$parameter->getType()->getName();
 
