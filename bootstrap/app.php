@@ -53,12 +53,16 @@ function laravelStyle($uri)
                     if ($existsUrlPath == $uri) {
                         $routerCondition = true;
                         $uri = $item;
+                        runMiddleware($item,$requestMethod);
                     }
                 }
             }
         }
     } else {
         $routerCondition = isset($GLOBALS['router'][$requestMethod]) && isset($GLOBALS['router'][$requestMethod][$uri]);
+        if($routerCondition){
+            runMiddleware($uri,$requestMethod);
+        }
     }
 
     if ($routerCondition) {
@@ -250,6 +254,9 @@ function callClassForThinkphp($uri, $method = null)
     }
 }
 
+/**
+ * run DI for router
+ */
 function callDI(string $controller, string $method, $controllerInstance)
 {
     $classMethod = new ReflectionMethod($controller, $method);
@@ -301,6 +308,9 @@ function callDI(string $controller, string $method, $controllerInstance)
     }
 }
 
+/**
+ * check dataType can be DI
+ */
 function checkNeedDI(string $type)
 {
     if (strpos($type, "\\")) {
@@ -310,4 +320,33 @@ function checkNeedDI(string $type)
         return false;
         // return "don't use DI : " . $type;
     }
+}
+
+/**
+ * run middleware 
+ */
+function runMiddleware($uri,$method){
+    $router=$GLOBALS['router'][$method][$uri];
+    if(count($router['middleware'])){
+        //run middleware
+        $kernelClass = new ReflectionClass("App\\Http\\Kernel");
+        $kernelInstance = $kernelClass->newInstance();
+        $routerMiddleware=$kernelInstance->getRouteMiddleware();
+        foreach($router['middleware'] as $item){
+            if(isset($routerMiddleware[$item])){
+                $middlewareClassName=$routerMiddleware[$item];
+                if(class_exists($middlewareClassName)){
+                    $middlewareClass = new ReflectionClass($middlewareClassName);
+                    $middlewareInstance = $middlewareClass->newInstance();
+                    // dd($middlewareInstance->run());
+                    $middlewareInstance->run();
+                }else{
+                    helpReturn(701,$middlewareClassName);
+                }
+            }else{
+                helpReturn(700,"not find : ".$item);
+            };
+        }
+        
+    };
 }

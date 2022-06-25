@@ -119,7 +119,9 @@ if (!function_exists('dd')) {
     }
 }
 if (!function_exists('getClassProperties')) {
-    //
+    /**
+     * use ReflectionClass get properties
+     */
     function getClassProperties($className, $types = 'public')
     {
         $ref = new ReflectionClass($className);

@@ -133,5 +133,6 @@ php minicli make:model User
 # 待開發
 
 > 撰寫middleware
+> cli 寫make:middleware
 
 > 最後測試在ubuntu能否正常運作

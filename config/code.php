@@ -29,4 +29,10 @@ return [
     602 => "try to call undefined property !",
     603 => "try to set private property !",
     604 => "try to set undefined property !",
+
+    // middleware
+    700 => "routeMiddleware not find ! check app/Http/Kernel.php",
+    701 => "Middleware not defined !",
+    702 => "DI fail : Middleware handle of function have some error dataType about arge !",
+    703 => "DI fail : Middleware handle function DI have some args !",
 ];

@@ -1,26 +1,15 @@
 <?php
 
-class Model
-{
-    private $name;
-
-    public function __construct()
-    {
-        $this->name = 'mark';
-    }
-
-    public function getName()
-    {
-        return $this->name;
+class persom{
+    public function echo(){
+        echo '11';
     }
 }
 
-class User extends Model
-{
-    public function __construct()
-    {
-        // parent::__construct();
+class mark extends persom{
+    public function echo($e=null){
+        echo '11';
     }
 }
 
-echo (new User())->getName();
+(new mark())->echo();
