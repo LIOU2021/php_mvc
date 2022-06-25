@@ -127,12 +127,5 @@ php minicli make:model User
 > DI 只支援到一層。比如UserController 可以DI UserRepository，但UserRepository中的建構子若還有參數，將會拋錯
 
 # 待開發
-> 撰寫model的ORM
-
-* all(V)
-* find(V)
-* update
-* create
-* delete
 
 > 撰寫middleware
