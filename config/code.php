@@ -18,6 +18,7 @@ return [
     410 => "DI fail : construct of Class have some argument !",
     411 => "DI fail : method of Class have some argument !",
     412 => "DI fail : construct of Class argument error !",
+    413 => "router name defined error format ! check first char must is '/'.",
 
     // sql error
     500 => "find model by id, but not find !",

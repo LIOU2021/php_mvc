@@ -145,6 +145,23 @@ Route::middleware(['test','auth'])->group(function(){
     Route::get('/test2', [TestController::class, 'index']);
     Route::get('/test3', [TestController::class, 'index']);
 });
+
+結合Router::prefix()方法
+Route::prefix('world')->middleware(['test','auth'])->get('/test',[TestController::class,"index"]);
+Route::middleware(['test','auth'])->prefix('world')->get('/test',[TestController::class,"index"]);
+Route::prefix('world')->middleware(['test'])->group(function(){
+    Route::get('/test',[TestController::class,"index"]);
+    Route::post('/test',[WelcomeController::class,"index"]);
+    Route::delete('/test',[WelcomeController::class,"index"]);
+    Route::put('/test',[WelcomeController::class,"index"]);
+});
+Route::prefix('world')->group(function(){
+    Route::get('/test',[TestController::class,"index"]);
+    Route::get('/test/{id}',[TestController::class,"index"]);
+    Route::post('/test',[WelcomeController::class,"index"]);
+    Route::delete('/test',[WelcomeController::class,"index"]);
+    Route::put('/test',[WelcomeController::class,"index"]);
+});
 ```
 # Log
 ```
@@ -157,5 +174,4 @@ Log::debug(__FILE__,__LINE__,$res);
 ```
 
 # 待開發
-> 開發route group ,prefix
 > 最後測試在ubuntu能否正常運作

@@ -7,6 +7,7 @@ class Route
 
     public static $apiPrefixFile = true;
     public static $useGroup = false;
+    public static $prefixName = null;
     private static array $middleware = [];
 
     public static function get($url, $controllerArr)
@@ -31,6 +32,10 @@ class Route
 
     public static function add($url, $method, $controllerArr)
     {
+        if ($url[0] != "/") {
+            helpReturn(413, 'your router : ' . $url);
+        }
+
         $urlParamCondition = false;
 
         if (strpos($url, '{') && strpos($url, '}')) {
@@ -38,7 +43,23 @@ class Route
         }
 
         if (self::$apiPrefixFile) {
-            $url = "/api$url";
+            if (self::$prefixName) {
+                $url = "/api/" . self::$prefixName . $url;
+                if (!self::$useGroup) {
+                    self::$prefixName = null;
+                }
+            } else {
+                $url = "/api$url";
+            }
+        } else {
+
+            if (self::$prefixName) {
+                $url = "/" . self::$prefixName . $url;
+            }
+
+            if (!self::$useGroup) {
+                self::$prefixName = null;
+            }
         }
 
         if ($urlParamCondition) {
@@ -78,10 +99,9 @@ class Route
                     'urlParamCondition' => $urlParamCondition,
                 ];
 
-                if(!self::$useGroup){
+                if (!self::$useGroup) {
                     self::setMiddleware([]);
                 }
-                
             } else {
                 $GLOBALS['router'][$method][$url] = [
                     'middleware' => [],
@@ -115,15 +135,15 @@ class Route
     {
         $kernel = new Kernel();
         $middlewareGroups = [];
-        
+
         $group = "";
 
         if ($isApi) {
             $middlewareGroups = $kernel->getMiddlewareGroups()['api'];
-            $group="api";
+            $group = "api";
         } else {
             $middlewareGroups = $kernel->getMiddlewareGroups()['web'];
-            $group="web";
+            $group = "web";
         }
 
         if (count($middlewareGroups)) {
@@ -137,10 +157,21 @@ class Route
         return $middlewareGroups;
     }
 
-    public static function group(callable $callback){
-        self::$useGroup=true;
+    public static function group(callable $callback)
+    {
+        self::$useGroup = true;
         $callback();
-        self::$useGroup=false;
+        self::$useGroup = false;
         self::setMiddleware([]);
+        self::$prefixName = null;
+    }
+
+    /**
+     * prefix router url
+     */
+    public static function prefix(string $name)
+    {
+        self::$prefixName = $name;
+        return new self;
     }
 }

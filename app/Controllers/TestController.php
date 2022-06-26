@@ -39,11 +39,11 @@ class TestController extends Controller
         // $request->age=1012;
         // $request->params2 ='test';
         // return $request->age2;
-        return $request->all();
-        return $request->age;
-        return $request->name;
-        return $request->all();
-        // return $request->getUrl();
-        return $request->all();
+        // return $request->all();
+
+        // return $request->age;
+        // return $request->name;
+        // return $request->all();
+        return $request->getUrl();
     }
 }

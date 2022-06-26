@@ -4,37 +4,18 @@ use App\Controllers\TestController;
 use App\Controllers\UserController;
 use App\Http\Route;
 
-Route::get('/user', [UserController::class, 'index']);
-// Route::post('/user', [UserController::class, 'create']);
-Route::get('/user/{id}', [UserController::class, 'show']);
-// Route::delete('/user/{id}', [UserController::class, 'delete']);
-// Route::put('/user/{id}', [UserController::class, 'update']);
-
-// Route::middleware(['auth','test'])->get('/test/{id}', [TestController::class, 'show']);
-// Route::middleware(['auth','test'])->post('/test/{id}', [TestController::class, 'show']);
-// Route::middleware(['auth','test'])->delete('/test/{id}', [TestController::class, 'show']);
-// Route::middleware(['auth','test'])->put('/test/{id}', [TestController::class, 'show']);
-
-Route::middleware(['test'])->get('/test', [TestController::class, 'index']);
-Route::middleware(['test','auth'])->group(function(){
-    Route::get('/test2', [TestController::class, 'index']);
-    Route::get('/test3', [TestController::class, 'index']);
+Route::prefix('user')->group(function(){
+    Route::get('/', [UserController::class, 'index']);
+    Route::post('/', [UserController::class, 'create']);
+    Route::get('/{id}', [UserController::class, 'show']);
+    Route::delete('/{id}', [UserController::class, 'delete']);
+    Route::put('/{id}', [UserController::class, 'update']);
 });
-// Route::middleware(['test'])->post('/test', [TestController::class, 'index']);
-// Route::middleware(['test'])->put('/test', [TestController::class, 'index']);
-// Route::middleware(['test'])->delete('/test', [TestController::class, 'index']);
 
-// Route::middleware(['test'])->get('/test3', [TestController::class, 'index']);
-// Route::middleware(['test'])->post('/test3', [TestController::class, 'index']);
-// Route::middleware(['test'])->put('/test3', [TestController::class, 'index']);
-// Route::middleware(['test'])->delete('/test3', [TestController::class, 'index']);
-
-// Route::middleware(['test'])->get('/test4/{id}', [TestController::class, 'index']);
-// Route::middleware(['test'])->post('/test4/{id}', [TestController::class, 'index']);
-// Route::middleware(['test'])->put('/test4/{id}', [TestController::class, 'index']);
-// Route::middleware(['test'])->delete('/test4/{id}', [TestController::class, 'index']);
-
-Route::get('/test4', [TestController::class, 'index']);
-Route::get('/test5', [TestController::class, 'index']);
-// Route::get('/test2', [TestController::class, 'index']);
-// Route::get('/test/{id}', [TestController::class, 'show']);
+Route::prefix('test')->middleware(['test','auth'])->group(function(){
+    Route::get('/', [TestController::class, 'index']);
+    Route::get('/{id}', [TestController::class, 'index']);
+    Route::post('/', [TestController::class, 'index']);
+    Route::delete('/{id}', [TestController::class, 'index']);
+    Route::put('/{id}', [TestController::class, 'index']);
+});
