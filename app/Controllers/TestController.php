@@ -35,9 +35,9 @@ class TestController extends Controller
     public function index(Request $request)
     {
         // dd($_REQUEST);
-        $request->age2=100;
-        $request->age=1012;
-        $request->params2 ='test';
+        // $request->age2=100;
+        // $request->age=1012;
+        // $request->params2 ='test';
         // return $request->age2;
         return $request->all();
         return $request->age;

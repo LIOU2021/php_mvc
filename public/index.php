@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+require_once '../config/cors.php';
+
 use App\Providers\AppProvider;
 
 require_once '../vendor/autoload.php';

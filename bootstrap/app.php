@@ -67,7 +67,7 @@ function laravelStyle($uri)
         //     $uri,
         //     $requestMethod,
         // );
-
+        // (new ReflectionClass('App\Debug\Log'))->newInstance()::debug(__FILE__,__LINE__,$requestMethod);
         if ($routerCondition) {
             runMiddleware($uri, $requestMethod);
         }
