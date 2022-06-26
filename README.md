@@ -141,6 +141,10 @@ php minicli make:middleware TestMiddleware
 Route::middleware(['auth','test'])->get('/test/{id}', [TestController::class, 'show']);
 Route::middleware(['auth','test'])->get('/test', [TestController::class, 'show']);
 Route::middleware(['test'])->get('/test', [TestController::class, 'index']);
+Route::middleware(['test','auth'])->group(function(){
+    Route::get('/test2', [TestController::class, 'index']);
+    Route::get('/test3', [TestController::class, 'index']);
+});
 ```
 # Log
 ```

@@ -6,6 +6,7 @@ class Route
 {
 
     public static $apiPrefixFile = true;
+    public static $useGroup = false;
     private static array $middleware = [];
 
     public static function get($url, $controllerArr)
@@ -76,7 +77,11 @@ class Route
                     'controllerMethod' => $controllerArr[1],
                     'urlParamCondition' => $urlParamCondition,
                 ];
-                self::setMiddleware([]);
+
+                if(!self::$useGroup){
+                    self::setMiddleware([]);
+                }
+                
             } else {
                 $GLOBALS['router'][$method][$url] = [
                     'middleware' => [],
@@ -130,5 +135,12 @@ class Route
         }
 
         return $middlewareGroups;
+    }
+
+    public static function group(callable $callback){
+        self::$useGroup=true;
+        $callback();
+        self::$useGroup=false;
+        self::setMiddleware([]);
     }
 }
