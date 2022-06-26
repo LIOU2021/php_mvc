@@ -26,10 +26,10 @@ Route::middleware(['test'])->post('/test3', [TestController::class, 'index']);
 Route::middleware(['test'])->put('/test3', [TestController::class, 'index']);
 Route::middleware(['test'])->delete('/test3', [TestController::class, 'index']);
 
-Route::middleware(['test'])->get('/test4', [TestController::class, 'index']);
-Route::middleware(['test'])->post('/test4', [TestController::class, 'index']);
-Route::middleware(['test'])->put('/test4', [TestController::class, 'index']);
-Route::middleware(['test'])->delete('/test4', [TestController::class, 'index']);
+Route::middleware(['test'])->get('/test4/{id}', [TestController::class, 'index']);
+Route::middleware(['test'])->post('/test4/{id}', [TestController::class, 'index']);
+Route::middleware(['test'])->put('/test4/{id}', [TestController::class, 'index']);
+Route::middleware(['test'])->delete('/test4/{id}', [TestController::class, 'index']);
 
 // Route::get('/test', [TestController::class, 'index']);
 // Route::delete('/test', [TestController::class, 'index']);

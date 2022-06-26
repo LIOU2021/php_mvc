@@ -18,8 +18,17 @@ class Request
         $this->uriLn = count($this->uri);
         $this->urlParam = $this->uri[$this->uriLn - 1];
 
-        foreach ($_REQUEST as $index => $item) {
-            $this->params[$index] = $item;
+        if (count($_REQUEST)) {
+            foreach ($_REQUEST as $index => $item) {
+                $this->params[$index] = $item;
+            }
+        }
+
+        $str_data = json_decode(file_get_contents('php://input'), true);
+        if (gettype($str_data)=='array' && count($str_data)) {
+            foreach ($str_data as $index => $item) {
+                $this->params[$index] = $item;
+            }
         }
     }
 
