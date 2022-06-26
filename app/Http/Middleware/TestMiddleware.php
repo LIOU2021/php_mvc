@@ -13,7 +13,7 @@ class TestMiddleware extends Middleware
 
     protected function handle(Request $request=null)
     {
-        $yourCondition=false;
+        $yourCondition=true;
         
         if ($yourCondition) {
             return true;

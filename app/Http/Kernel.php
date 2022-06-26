@@ -6,6 +6,22 @@ class Kernel
 {
 
     /**
+     * The application's route middleware groups.
+     *
+     * @var array
+     */
+    protected $middlewareGroups = [
+        'web' => [
+            // \App\Http\Middleware\CorsMiddleware::class,
+        ],
+
+        'api' => [
+            \App\Http\Middleware\CorsMiddleware::class,
+        ],
+    ];
+
+
+    /**
      * The application's route middleware.
      *
      * These middleware may be assigned to groups or used individually.
@@ -17,7 +33,13 @@ class Kernel
         'test' => \App\Http\Middleware\TestMiddleware::class,
     ];
 
-    public function getRouteMiddleware(){
+    public function getRouteMiddleware()
+    {
         return $this->routeMiddleware;
+    }
+
+    public function getMiddlewareGroups()
+    {
+        return $this->middlewareGroups;
     }
 }

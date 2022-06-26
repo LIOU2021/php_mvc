@@ -74,6 +74,7 @@ class Route
                 // };
                 $GLOBALS['router'][$method][$url] = [
                     'middleware' => self::getMiddleware(),
+                    'middlewareGroups' => self::getMiddlewareGroups(self::$apiPrefixFile),
                     'controllerName' => $controllerArr[0],
                     'controllerMethod' => $controllerArr[1],
                     'urlParamCondition' => $urlParamCondition,
@@ -83,6 +84,7 @@ class Route
             } else {
                 $GLOBALS['router'][$method][$url] = [
                     'middleware' => [],
+                    'middlewareGroups' => self::getMiddlewareGroups(self::$apiPrefixFile),
                     'controllerName' => $controllerArr[0],
                     'controllerMethod' => $controllerArr[1],
                     'urlParamCondition' => $urlParamCondition,
@@ -106,5 +108,31 @@ class Route
     public static function getMiddleware()
     {
         return self::$middleware;
+    }
+
+    public static function getMiddlewareGroups($isApi)
+    {
+        $kernel = new Kernel();
+        $middlewareGroups = [];
+        
+        $group = "";
+
+        if ($isApi) {
+            $middlewareGroups = $kernel->getMiddlewareGroups()['api'];
+            $group="api";
+        } else {
+            $middlewareGroups = $kernel->getMiddlewareGroups()['web'];
+            $group="web";
+        }
+
+        if (count($middlewareGroups)) {
+            foreach ($middlewareGroups as $middlewareGroup) {
+                if (!class_exists($middlewareGroup)) {
+                    helpReturn(704, "check $group middleware group : $middlewareGroup");
+                }
+            }
+        }
+
+        return $middlewareGroups;
     }
 }

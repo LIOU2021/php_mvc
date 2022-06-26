@@ -35,4 +35,5 @@ return [
     701 => "Middleware not defined !",
     702 => "DI fail : Middleware handle of function have some error dataType about arge !",
     703 => "DI fail : Middleware handle function DI have some args !",
+    704 => "middlewareGroups not defined !",
 ];

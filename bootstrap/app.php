@@ -339,6 +339,15 @@ function runMiddleware($uri, $method)
  
     $router = $GLOBALS['router'][$method][$uri];
 
+    if (count($router['middlewareGroups'])) {
+        //run middleware
+        foreach($router['middlewareGroups'] as $middlewareGroup){
+            $middlewareGropClass = new ReflectionClass($middlewareGroup);
+            $middlewareGropInstance = $middlewareGropClass->newInstance();
+            $middlewareGropInstance->run();
+        }
+    };
+
     if (count($router['middleware'])) {
         //run middleware
         $kernelClass = new ReflectionClass("App\\Http\\Kernel");
