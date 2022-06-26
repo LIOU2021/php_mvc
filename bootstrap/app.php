@@ -23,7 +23,6 @@ function laravelStyle($uri)
     $reflectionClass = new ReflectionClass('App\Http\Route');
     $reflectionClass->getProperty('apiPrefixFile')->setValue(false);
     require_once '../routes/web.php';
-    
     // echo json_encode($GLOBALS['router'],JSON_PRETTY_PRINT);
     // exit;
 
@@ -336,12 +335,11 @@ function checkNeedDI(string $type)
  */
 function runMiddleware($uri, $method)
 {
- 
     $router = $GLOBALS['router'][$method][$uri];
 
     if (count($router['middlewareGroups'])) {
         //run middleware
-        foreach($router['middlewareGroups'] as $middlewareGroup){
+        foreach ($router['middlewareGroups'] as $middlewareGroup) {
             $middlewareGropClass = new ReflectionClass($middlewareGroup);
             $middlewareGropInstance = $middlewareGropClass->newInstance();
             $middlewareGropInstance->run();
