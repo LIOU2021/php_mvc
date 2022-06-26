@@ -154,6 +154,4 @@ Log::debug(__FILE__,__LINE__,$res);
 
 # 待開發
 
-> CORS遇到option方法會出錯
 > 最後測試在ubuntu能否正常運作
-> debug格式還少了檔案位置跟行數
