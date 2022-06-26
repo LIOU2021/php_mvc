@@ -131,9 +131,11 @@ php minicli make:middleware TestMiddleware
 
 > thinkphp router style 不支援DI，所以Controller的建構子與方法不可以有參數
 
-# Middleware
+# Router:Middleware(), prfix(), group()
 > 如果DI模式開啟的話，在middleware中的handle(Request $request)會自動實現DI，否則$request就是null
+
 > 建立Middleware後，要在app\Http\Kernel.php的$routeMiddleware中增加對應的值才能使用
+
 > 建立在app\Http\Kernel.php的$middlewareGroups，是針對api.php與web.php做的中間層處理
 ```
 使用方法
