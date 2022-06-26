@@ -2,6 +2,13 @@
 
 namespace App\Http;
 
+/**
+ * @method static \App\Http\Route get(string $uri, array|string|callable|null $action = null)
+ * @method static \App\Http\Route post(string $uri, array|string|callable|null $action = null)
+ * @method static \App\Http\Route put(string $uri, array|string|callable|null $action = null)
+ * @method static \App\Http\Route delete(string $uri, array|string|callable|null $action = null)
+ * @method static \App\Http\Route patch(string $uri, array|string|callable|null $action = null)
+ */
 class Route
 {
 
@@ -28,6 +35,11 @@ class Route
     public static function delete($url, $controllerArr)
     {
         self::add($url, "DELETE", $controllerArr);
+    }
+
+    public static function patch($url, $controllerArr)
+    {
+        self::add($url, "PATCH", $controllerArr);
     }
 
     public static function add($url, $method, $controllerArr)
