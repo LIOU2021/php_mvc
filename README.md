@@ -17,7 +17,7 @@
 3. thinkphp 模式下 /controller/method/{id} 與 /controller/method 導向的controller@method是一樣的
 
 > 寫在routes/資料夾
-1. 如果是api.php的話，API路由前贅會加入"/api"
+1. 如果是api.php的話，API路由前贅會加入"/api"，並且允許CORS
 
 > 注意事項
 1. 路由開頭一定要有"/"斜線，比如 /user，這是正確的。
@@ -153,5 +153,5 @@ Log::debug(__FILE__,__LINE__,$res);
 ```
 
 # 待開發
-
+> 開發route group ,prefix
 > 最後測試在ubuntu能否正常運作

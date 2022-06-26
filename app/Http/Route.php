@@ -69,9 +69,6 @@ class Route
             helpReturn(407, $url . "@" . $method);
         } else {
             if (count(self::getMiddleware())) {
-                // if($url !="/api/test/{id}"){
-                //     dd($url);
-                // };
                 $GLOBALS['router'][$method][$url] = [
                     'middleware' => self::getMiddleware(),
                     'middlewareGroups' => self::getMiddlewareGroups(self::$apiPrefixFile),
@@ -80,7 +77,6 @@ class Route
                     'urlParamCondition' => $urlParamCondition,
                 ];
                 self::setMiddleware([]);
-                // $this->middleware=[];
             } else {
                 $GLOBALS['router'][$method][$url] = [
                     'middleware' => [],
