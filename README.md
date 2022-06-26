@@ -134,6 +134,7 @@ php minicli make:middleware TestMiddleware
 # Middleware
 > 如果DI模式開啟的話，在middleware中的handle(Request $request)會自動實現DI，否則$request就是null
 > 建立Middleware後，要在app\Http\Kernel.php的$routeMiddleware中增加對應的值才能使用
+> 建立在app\Http\Kernel.php的$middlewareGroups，是針對api.php與web.php做的中間層處理
 ```
 使用方法
 
@@ -141,6 +142,18 @@ Route::middleware(['auth','test'])->get('/test/{id}', [TestController::class, 's
 Route::middleware(['auth','test'])->get('/test', [TestController::class, 'show']);
 Route::middleware(['test'])->get('/test', [TestController::class, 'index']);
 ```
+# Log
+```
+$res['data']=[1,2,3];
+$res['msg']='success !';
+$res['status']=200;
+
+Log::debug(__FILE__,__LINE__,$res);
+//storage\logs\debug.log
+```
+
 # 待開發
 
+> CORS遇到option方法會出錯
 > 最後測試在ubuntu能否正常運作
+> debug格式還少了檔案位置跟行數

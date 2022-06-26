@@ -1,7 +1,11 @@
 <?php
 
+use App\Debug\Log;
+
 require_once '../vendor/autoload.php';
 
-use App\Models\User;
+$res['data']=[1,2,3];
+$res['msg']='success !';
+$res['status']=200;
 
-echo (new User())->getModelName();
+echo Log::debug(__FILE__,__LINE__,$res);

@@ -32,6 +32,6 @@ class CorsMiddleware extends Middleware
         header("Access-Control-Allow-Origin: *");
         header("Access-Control-Allow-Methods: *");
         header("Access-Control-Allow-Headers: Methods,AccountKey,x-requested-with, Content-Type, origin, authorization, accept, client-security-token, host, date, cookie, cookie2");
-        header('Access-Control-Max-Age: 86400');
+        // header('Access-Control-Max-Age: 86400');
     }
 }
