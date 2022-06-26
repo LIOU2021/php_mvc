@@ -12,13 +12,21 @@ class Model
     private $className;
     private $query;
 
-    public function __construct()
+    final public function __construct()
     {
         $class = get_class($this);
         $class = explode("\\", $class);
         $ln = count($class);
         $class = strtolower($class[$ln - 1]);
         $this->className = $class;
+    }
+
+    /**
+     * 獲取model對應table的名稱
+     */
+    public function getModelName()
+    {
+        return $this->className;
     }
 
     /**
@@ -90,7 +98,7 @@ class Model
         } catch (
             Exception $e
         ) {
-            $rs=null;
+            $rs = null;
             // dd(123);
             // dd($e->getMessage());
         }
@@ -99,7 +107,7 @@ class Model
 
 
         $pdo = null;
-        return $rs??null;
+        return $rs ?? null;
     }
 
     /**
