@@ -16,3 +16,11 @@ Route::prefix('world')->group(function(){
     Route::delete('/test',[WelcomeController::class,"index"]);
     Route::put('/test',[WelcomeController::class,"index"]);
 });
+
+Route::prefix('world')->group(function(){
+    Route::get('/',[TestController::class,"index"]);
+    Route::get('/{id}',[TestController::class,"index"]);
+    Route::post('/',[WelcomeController::class,"index"]);
+    Route::delete('/{id}',[WelcomeController::class,"index"]);
+    Route::put('/{id}',[WelcomeController::class,"index"]);
+});

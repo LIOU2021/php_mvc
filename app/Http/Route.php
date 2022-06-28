@@ -56,7 +56,12 @@ class Route
 
         if (self::$apiPrefixFile) {
             if (self::$prefixName) {
-                $url = "/api/" . self::$prefixName . $url;
+                if($url==='/'){
+                    $url = "/api/" . self::$prefixName;
+                }else{
+                    $url = "/api/" . self::$prefixName . $url;
+                }
+
                 if (!self::$useGroup) {
                     self::$prefixName = null;
                 }
@@ -66,7 +71,12 @@ class Route
         } else {
 
             if (self::$prefixName) {
-                $url = "/" . self::$prefixName . $url;
+                if($url==='/'){
+                    $url = "/" . self::$prefixName;
+                }else{
+                    $url = "/" . self::$prefixName . $url;
+                }
+               
             }
 
             if (!self::$useGroup) {
