@@ -20,7 +20,7 @@ class App
 
     public function registerCommand($name, $callable)
     {
-        if(isset($this->registry[$name])){
+        if (isset($this->registry[$name])) {
             $this->getPrinter()->display("ERROR: Command \"$name\" duplicate defind .");
             exit;
         }
@@ -42,9 +42,11 @@ class App
     {
         // var_dump($argv);
         // exit;
-
+        
         if (isset($argv[1])) {
             $command_name = $argv[1];
+        }else{
+            $this->description($argv);
         }
 
         $command = $this->getCommand($command_name);
@@ -54,5 +56,13 @@ class App
         }
 
         call_user_func($command, $argv);
+    }
+
+    public function description(array $argv)
+    {
+        if(count($argv)==1){
+            $this->getPrinter()->display("welcome to my custom CLI, use 'php minicli help' to get more information !");
+            exit;
+        }
     }
 }

@@ -108,6 +108,8 @@ return $user->exec();
 
 # CLI
 ```
+sudo chmod +x minicli 
+
 php minicli help
 
 php minicli make:controller UserController
