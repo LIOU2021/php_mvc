@@ -12,7 +12,7 @@ class Middleware
     public function __construct($name)
     {
         $this->printer = new CliPrinter();
-        $this->filePath = "app\Http\Middleware";
+        $this->filePath = "app/Http/Middleware";
 
         if (!$name) {
             $this->getPrinter()->display("ERROR: Command, lose arg like 'php minicli make:middleware TestMiddleware' .");
