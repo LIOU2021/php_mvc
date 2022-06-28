@@ -178,4 +178,4 @@ Log::debug(__FILE__,__LINE__,$res);
 ```
 
 # 待開發
-> 最後測試在ubuntu能否正常運作
+> 
