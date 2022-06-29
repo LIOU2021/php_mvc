@@ -19,3 +19,5 @@ Route::prefix('test')->middleware(['test','auth'])->group(function(){
     Route::delete('/{id}', [TestController::class, 'index']);
     Route::put('/{id}', [TestController::class, 'index']);
 });
+
+Route::get('/log',[TestController::class,'index2']);

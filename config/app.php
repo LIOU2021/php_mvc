@@ -19,3 +19,5 @@ define('DB_PASS', env('DB_PASS',null));
 //router
 define('ROUTERSTYLE',env('ROUTERSTYLE','thinkphp'));
 
+//timezome
+define('TIMEZOME',env("timezone","UTC"));

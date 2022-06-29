@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Debug\Log;
 use App\Http\Request;
 use App\Http\Test;
 
@@ -12,7 +13,7 @@ class TestController extends Controller
 
     public function __construct(
         // Request $request
-        )
+    )
     {
         // $this->url=$request->getUrl();
         $this->test = 'TestController的建構子';
@@ -20,16 +21,21 @@ class TestController extends Controller
 
     public function show(
         // Request $request
-    ){
+    )
+    {
         // return $this->url;
-        $request=new Request();
+        $request = new Request();
         return $request->getUrl();
         // return 'run';
     }
 
-    public function index2(string $p2)
+    public function index2()
     {
-        return 'TestController@test';
+        $res['data'] = ['A',"B","C"];
+        $res['msg'] = 'success !';
+        $res['status'] = 200;
+
+        return Log::debug(__FILE__, __LINE__, $res);
     }
 
     public function index(Request $request)

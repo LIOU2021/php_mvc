@@ -11,7 +11,7 @@ class Log
      */
     public static function debug($file,$line,$data = null)
     {
-        $response = $file."@".$line." : ".json_encode($data, JSON_PRETTY_PRINT)."\n\n";
+        $response = date('Y-m-d H:i:s')." : ".$file."@".$line." : ".json_encode($data, JSON_PRETTY_PRINT)."\n\n";
 
         file_put_contents(self::DEFAULTPATH . '/debug.log',$response , FILE_APPEND);
 
