@@ -50,6 +50,8 @@ class TestController extends Controller
         // return $request->age;
         // return $request->name;
         // return $request->all();
-        return $request->getUrl();
+        // return $request->getUrl();
+
+        return config('code.302');
     }
 }

@@ -23,7 +23,7 @@ if (!function_exists('helpReturn')) {
         }
 
         header('Content-Type: application/json; charset=utf-8');
-        $code = require_once('../config/code.php');
+        $code = require('../config/code.php');
         $res['status'] = $status;
 
         if (isset($code[$status])) {
@@ -156,6 +156,34 @@ if (!function_exists('prepare')) {
             return "'" . htmlspecialchars($string, ENT_QUOTES) . "'";
         } else {
             return null;
+        }
+    }
+}
+
+if (!function_exists('config')) {
+    /**
+     * 呼叫config/
+     */
+    function config($string)
+    {
+        $arr = explode(".", $string);
+        $ln = count($arr);
+
+        if ($ln < 2) {
+            helpReturn(300);
+        }
+
+        $file = "../config/" . $arr[0] . ".php";
+
+        if (file_exists($file)) {
+            $configData = require $file;
+            if(isset($configData[$arr[1]])){
+                return $configData[$arr[1]];
+            }else{
+                helpReturn(302,"check : ./config/" . $arr[0] . ".php@".$arr[1]);
+            }
+        } else {
+            helpReturn(301, "check : ./config/" . $arr[0] . ".php");
         }
     }
 }

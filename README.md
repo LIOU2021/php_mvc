@@ -7,6 +7,10 @@
 
 # config
 > config/
+```
+//讀取config/code.php中key 404的回傳值
+config('code.404')
+```
 
 # router
 > 所有的Router 存放在 $GLOBALS['router']

@@ -4,6 +4,11 @@ return [
     // success
     200 => "success !",
 
+    // other
+    300=> "config method error using ! ex:config('code.404')",
+    301=> "config file not find !",
+    302=> "config : index not find !",
+
     // Router
     400 => "router style env error, only allow 'laravel' or 'thinkphp' !",
     401 => "controller not find !",
